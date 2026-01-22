@@ -1,0 +1,57 @@
+; Laboratorio 0 
+; Created: 20/1/2026 14:39:37
+; Author : Cristian Juárez
+; Descripción:
+;Programación que hace titlar un LED en elk puerto PB0
+
+.include "M328PDEF.inc"
+.org 0x00
+rjmp START
+
+START:
+
+LDI R16, LOW (RAMEND)
+OUT SPL, R16
+LDI R16, HIGH (RAMEND)
+OUT SPH, R16 
+
+LDI	R16, (1<<CLKPCE)
+STS CLKPR, R16
+LDI	R16, (1 << CLKPS3)
+STS CLKPR, R16
+
+
+LDI R16, 0xFF
+OUT DDRB, R16 //Todo puerto B es salida
+
+LOOP:
+	LDI		R16, 0x00
+	OUT		PORTB, R16 //Enciende el LED
+	CALL	DELAY
+	CALL	DELAY
+	CALL	DELAY
+	LDI		R16, 0xFF
+	OUT		PORTB, R16 // Apaga el LED
+	CALL	DELAY
+	CALL	DELAY
+	CALL	DELAY
+	RJMP	LOOP
+
+DELAY:
+	LDI R17, 255
+DELAY1:
+	DEC R17
+	BRNE DELAY1
+	LDI	R17, 255
+DELAY2:
+	DEC R17
+	BRNE DELAY2
+	LDI	R17, 255
+DELAY3:
+	DEC R17
+	BRNE DELAY3
+	LDI	R17, 255
+DELAY4:
+	DEC R17
+	BRNE DELAY4
+	RET 
