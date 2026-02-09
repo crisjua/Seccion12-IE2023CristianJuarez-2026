@@ -130,6 +130,7 @@ UNION:
 	OR		R21, R20 // Unir ambos registros
 	SWAP	R20		 // Regresar registro a su estado original
 	OUT		PORTD, R21 // Mostrar en Salida
+	RET
 SUMANDO:
 	CALL	DELAY
 	MOV		R23, R17
