@@ -66,9 +66,7 @@ SETUP:
 /****************************************/
 // Loop Infinito
 MAIN_LOOP:
-	SBI		DDRD, PD1
-	CBI		PORTD, PD1
-
+	
 	SBIS	PINC, SUBIR // si pc3 es 0 saltar
 	CALL	INCREMENTO1	
 	SBIS	PINC, BAJAR // si pc2 es 0 saltar
