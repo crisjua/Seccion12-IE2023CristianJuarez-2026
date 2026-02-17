@@ -32,14 +32,14 @@ SETUP:
 	LDI		R16, 0x00	
 	STS		UCSR0B, R16
 
-	LDI		R16, 0b11110000
+	LDI		R16, 0b11110000 // Los utimos puertos de C estan puestos como salida y los primeros en entrada
 	OUT		DDRC, R16
-	LDI		R16, 0b00001111
+	LDI		R16, 0b00001111  // Los ultimos empiezan apagados y los primeros tienen pull up
 	OUT		PORTC, R16
 
 	//Configuración Salidas D7S
 
-	LDI		R16, 0b0111_1111
+	LDI		R16, 0b0111_1111	// Configura el puerto D como salida
 	OUT		DDRD, R16			//output display
 
 	LDI		R18, 0				//T7S
@@ -47,10 +47,10 @@ SETUP:
 	LDI		ZH, HIGH(T7S << 1)
 	LDI		ZL, LOW(T7S << 1)
 	ADD		ZL, R18
-	LPM		R18, Z
+	LPM		R18, Z				// Cargamos la memoria a Z
 
-	LDI		R16, 0x3F
-	OUT		DDRB, R16
+	LDI		R16, 0x3F			// 7segmentos en 0
+	OUT		DDRB, R16			// Mostramos
 	LDI		R16, 0x00
 	OUT		PORTB, R16		//Iniciamos en 0
 
@@ -65,9 +65,9 @@ MAIN_LOOP:
 	OUT		PORTD, R18
 
 
-	SBIS	PINC, PC0
+	SBIS	PINC, PC0		// Salta a la siguiente instrucción si el boton PC0 esta presionado 
 	CALL	DECREMENTAR
-	SBIS	PINC, PC1
+	SBIS	PINC, PC1		// Salta a la siguiente instrucción si el boton PC1 esta presionado 
 	CALL	INCREMENTAR
 
 	IN		R26, TIFR0		//Lee el registro de bander de interrupción
@@ -84,20 +84,20 @@ MAIN_LOOP:
 
 	INC		R30
 	CPI		R30, 100
-	BRNE	MAIN_LOOP
+	BRNE	MAIN_LOOP   // Si la comparación es igual regresa a Main_Loop
 	CLR		R30
 
 	INC		R20
-	MOV		R25, R20
-	OUT		PORTB, R25
+	MOV		R25, R20	// Copiamos el registro R20 a R25 
+	OUT		PORTB, R25	// Mostramos el Resultado en PORTB
 
 	//VER ALARMA
-	CP		R21, R20
+	CP		R21, R20	// Compara lo de la salida y si son iguales pasa a siguiente instrucción
 	BRNE	MAIN_LOOP
 	SBI		PINC, PC4   //toggle
 
-	MOV		R23, R20
-	CP		R21, R23
+	MOV		R23, R20	// Copiamos registro R20 a R23
+	CP		R21, R23	
 	BRNE	MAIN_LOOP
 	LDI		R20, 0
 
