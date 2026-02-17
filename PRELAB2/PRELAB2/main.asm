@@ -69,7 +69,7 @@ ZERO:
 	RET
 
 TIMER:
-	LDI		R16, (1 << CS02) | (1 << CS00)	// Preescalador de 1024
+	LDI		R16, (1 << CS01) | (1 << CS00) 	// Preescalador de 256
 	OUT		TCCR0B, R16
 
 	LDI		R16, 100		// Valor de Overflow
