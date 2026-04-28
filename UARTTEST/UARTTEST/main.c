@@ -55,7 +55,9 @@ ISR(USART_RX_vect){
 	writeChar(bufferRX);
 	if(bufferRX == "a")
 	{
-		PORTB |= ()
+		PORTB |= (1<<PORTB5)
+		PORTB |= (1<<PORTB5)
+	
 	}
 }	
 
